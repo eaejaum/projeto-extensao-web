@@ -1,0 +1,12 @@
+.principal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .7rem;
+}
+
+.redes-sociais {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
