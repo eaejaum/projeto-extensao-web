@@ -1,0 +1,9 @@
+.principal {
+    padding: .6rem;
+}
+
+.navegacao a {
+    text-decoration: none;
+    color: #333;
+    padding: 1rem;
+}
