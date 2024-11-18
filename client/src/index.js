@@ -4,11 +4,41 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
+import { 
+  createBrowserRouter,
+  RouterProvider
+} from 'react-router-dom'
+import Newsletter from './Routes/Newsletter';
+import Contact from './Routes/Contact';
+import Home from './Routes/Home';
+import Error404 from './Routes/Error404';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <App />,
+    errorElement: <Error404 />,
+    children: [
+      {
+        path: "/",
+        element: <Home />
+      },
+      {
+        path: "contact",
+        element: <Contact />
+      },
+      {
+        path: "newsletter",
+        element: <Newsletter />
+      }
+    ] 
+  }
+])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router}/>
   </React.StrictMode>
 );
 
