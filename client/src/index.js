@@ -8,10 +8,10 @@ import {
   createBrowserRouter,
   RouterProvider
 } from 'react-router-dom'
-import Newsletter from './Routes/Newsletter';
 import Contact from './Routes/Contact';
 import Home from './Routes/Home';
 import Error404 from './Routes/Error404';
+import Newsletter from './Routes/Newsletter';
 
 const router = createBrowserRouter([
   {
