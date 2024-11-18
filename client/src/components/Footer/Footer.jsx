@@ -1,9 +1,16 @@
 import React from 'react';
-import './Footer.css'
 
 const Footer = () => {
     return (
-        <div className="principal bg-body-tertiary">
+        <div 
+            className="bg-body-tertiary" 
+            style={{ 
+                display: 'flex', 
+                justifyContent: 'center', 
+                alignItems: 'center',
+                padding: '.7rem' 
+            }}
+        >
             <span>Copyright L & BY Pratas - 2024. Todos os direitos reservados.</span>
         </div>
     );
