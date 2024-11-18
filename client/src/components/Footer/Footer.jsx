@@ -3,15 +3,15 @@ import React from 'react';
 const Footer = () => {
     return (
         <div 
-            className="bg-body-tertiary" 
             style={{ 
                 display: 'flex', 
                 justifyContent: 'center', 
                 alignItems: 'center',
-                padding: '.7rem' 
+                padding: '.7rem', 
+                backgroundColor: '#E4E0DA',
             }}
         >
-            <span>Copyright L & BY Pratas - 2024. Todos os direitos reservados.</span>
+            <span style={{ color: "#C7B29A" }}>Copyright L & BY Pratas - 2024. Todos os direitos reservados.</span>
         </div>
     );
 };
