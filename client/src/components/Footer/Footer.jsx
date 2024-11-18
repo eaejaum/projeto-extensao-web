@@ -8,10 +8,10 @@ const Footer = () => {
                 justifyContent: 'center', 
                 alignItems: 'center',
                 padding: '.7rem', 
-                backgroundColor: '#E4E0DA',
+                backgroundColor: '#A2907A',
             }}
         >
-            <span style={{ color: "#C7B29A" }}>Copyright L & BY Pratas - 2024. Todos os direitos reservados.</span>
+            <span style={{ color: "#DDDAD6" }}>Copyright L & BY Pratas - 2024. Todos os direitos reservados.</span>
         </div>
     );
 };

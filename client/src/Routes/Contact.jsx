@@ -23,8 +23,8 @@ const Contact = () => {
             CONTATO
           </h1>
         </div>
-        <form style={{ width: '30%' }}>
-          <div style={{ display: "flex", flexDirection: 'column' }}>
+        <form style={{ width: "30%" }}>
+          <div style={{ display: "flex", flexDirection: "column" }}>
             <div className="mb-3">
               <input
                 type="text"
@@ -32,9 +32,9 @@ const Contact = () => {
                 id="nomeCompleto"
                 placeholder="Nome Completo"
                 style={{
-                  background: 'transparent',
-                  border: '2px solid #FFF',
-                  color: '#FFF'
+                  background: "transparent",
+                  border: "2px solid #FFF",
+                  color: "#FFF",
                 }}
               />
             </div>
@@ -45,9 +45,9 @@ const Contact = () => {
                 id="email"
                 placeholder="Email"
                 style={{
-                  background: 'transparent',
-                  border: '2px solid #FFF',
-                  color: '#FFF'
+                  background: "transparent",
+                  border: "2px solid #FFF",
+                  color: "#FFF",
                 }}
               />
             </div>
@@ -58,9 +58,9 @@ const Contact = () => {
                 id="telefone"
                 placeholder="Telefone (Opcional)"
                 style={{
-                  background: 'transparent',
-                  border: '2px solid #FFF',
-                  color: '#FFF'
+                  background: "transparent",
+                  border: "2px solid #FFF",
+                  color: "#FFF",
                 }}
               />
             </div>
@@ -72,22 +72,45 @@ const Contact = () => {
                 id="mensagem"
                 placeholder="Mensagem (Opcional)"
                 style={{
-                  background: 'transparent',
-                  border: '2px solid #FFF',
-                  color: '#FFF'
+                  background: "transparent",
+                  border: "2px solid #FFF",
+                  color: "#FFF",
                 }}
               />
             </div>
-            <button type="submit" className="btn btn-success" style={{ padding: '.3rem 2rem', alignSelf: 'end'}}>
+            <button
+              type="submit"
+              className="btn btn-success"
+              style={{ padding: ".3rem 2rem", alignSelf: "end" }}
+            >
               Enviar
             </button>
           </div>
         </form>
       </div>
-      <div style={{ padding: "2rem 5rem" }}>
+      <div style={{ padding: "2rem 5rem", background: "#FAFAFA" }}>
         <h6 style={{ fontWeight: "bold" }}>DADOS DE CONTATO</h6>
         <hr />
         <p>lbypratas@gmail.com</p>
+      </div>
+      <div
+        style={{
+          padding: "2rem 0",
+          background: "#E4E0DA",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <div
+          style={{
+            border: "3px solid #BFA78A",
+            borderRadius: "100%",
+            width: "4.5rem",
+            height: "4.5rem",
+          }}
+        >
+
+        </div>
       </div>
     </>
   );

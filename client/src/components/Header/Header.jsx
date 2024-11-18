@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 
 const Header = () => {
     return (
-        <nav className="navbar bg-body-tertiary">
-            <div className="container-fluid" style={{ padding: '.6rem' }}>
+        <nav className="navbar" style={{ background: "#FAFAFA", padding: '2rem' }}>
+            <div className="container-fluid">
                 <span className="navbar-brand mb-0 h1">L&BY Pratas</span>
                 <div className="navegacao">
                     <Link to="/">Início</Link>
