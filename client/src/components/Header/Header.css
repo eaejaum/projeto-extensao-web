@@ -3,3 +3,7 @@
     color: #333;
     padding: 1rem;
 }
+
+.navegacao a.ativo {
+    color: #BFA78A;
+}

@@ -107,9 +107,13 @@ const Contact = () => {
             borderRadius: "100%",
             width: "4.5rem",
             height: "4.5rem",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            cursor: "pointer",
           }}
         >
-
+          <i class="bi bi-instagram fs-1" style={{ color: "#BFA78A" }}></i>
         </div>
       </div>
     </>
