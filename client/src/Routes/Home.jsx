@@ -28,6 +28,7 @@ const Home = () => {
               src={imagem}
               alt={`Slide ${index + 1}`}
             />
+            {/* Descriçao carrossel comentada */}
             {/* <Carousel.Caption>
               <h3>Slide {index + 1}</h3>
               <p>
