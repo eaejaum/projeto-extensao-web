@@ -10,12 +10,6 @@ const db = mysql.createPool({
   database: "lbypratas",
 });
 
-const corsOptions = {
-  origin: "http://localhost:3000/", // Permitir apenas a origem desejada
-  methods: ["GET", "POST"],
-  allowedHeaders: ["Content-Type", "Authorization"], // Cabeçalhos permitidos
-};
-
 app.use(cors());
 
 app.get("/", (req, res) => {
