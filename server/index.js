@@ -13,7 +13,7 @@ const db = mysql.createPool({
 app.use(cors());
 
 app.get("/", (req, res) => {
-  let SQL = "SELECT * FROM usuario";
+  let SQL = "SELECT * FROM USUARIO";
   // res.json({ teste: "val", valor: 123 });
   db.query(SQL, (err, result) => {
     console.log(err, result);
@@ -28,6 +28,17 @@ app.get("/estoque", (req, res) => {
       return res.status(500).json({ error: err.message }); // Retorna erro, se houver
     }
     res.json(results); // Retorna os dados da tabela ITEM como JSON
+  });
+});
+
+app.get("/estoque/:numberProductId", (req, res) => {
+  const { numberProductId } = req.params
+  const query = `SELECT * FROM ITEM WHERE CODIGO_ITEM = ${parseInt(numberProductId)};`
+  db.query(query, (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    res.json(results)
   });
 });
 
