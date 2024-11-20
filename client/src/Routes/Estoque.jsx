@@ -7,7 +7,7 @@ const Estoque = () => {
     fetch("http://localhost:3001/estoque")
       .then((response) => response.json())
       // 4. Setting *dogImage* to the image url that we received from the response above
-      .then((data) => setItens(data));
+      .then((data) => {setItens(data);console.log(data[0].NOME)});
   }, []);
 
   return (
@@ -23,13 +23,11 @@ const Estoque = () => {
           </tr>
         </thead>
         <tbody>
-          {/* <p>{itens.teste}</p> */}
-          {/* <p>{itens.valor}</p> */}
           {itens.map((item) => (
             <tr key={item.CODIGO_ITEM}>
               <td>{item.CODIGO_ITEM}</td>
               <td>{item.NOME}</td>
-              <td>{item.VALOR.toFixed(2)}</td>
+              <td>{item.VALOR}</td>
               <td>{item.QUANTIDADE}</td>
             </tr>
           ))}
