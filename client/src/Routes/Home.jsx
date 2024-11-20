@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import Carousel from "react-bootstrap/Carousel";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -13,6 +14,8 @@ import rosinha from "../assets/ROSINHA.jpg";
 const imagens = [discountOff, bf, rosa, rosao, rosinha];
 
 const Home = () => {
+  const navigate = useNavigate();
+
   return (
     <div>
       {/* Carrossel corrigido */}
@@ -57,6 +60,7 @@ const Home = () => {
                 display: "flex",
                 flexDirection: "column",
               }}
+              onClick={() => navigate(`/productDetails/${1}`)}
             >
               <div
                 style={{
