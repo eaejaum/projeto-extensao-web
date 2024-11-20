@@ -59,6 +59,7 @@ const Home = () => {
                 maxWidth: "200px",
                 display: "flex",
                 flexDirection: "column",
+                cursor: "pointer"
               }}
               onClick={() => navigate(`/productDetails/${1}`)}
             >
