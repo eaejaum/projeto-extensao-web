@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Carousel from "react-bootstrap/Carousel";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -15,34 +15,27 @@ const imagens = [discountOff, bf, rosa, rosao, rosinha];
 
 const Home = () => {
   const navigate = useNavigate();
+  const [itens, setItens] = useState([]);
 
-  useEffect(() => {});
+  useEffect(() => {
+    fetch("http://localhost:3001/estoque")
+      .then((response) => response.json())
+      .then((data) => setItens(data));
+  }, []);
 
   return (
     <div>
-      {/* Carrossel corrigido */}
       <Carousel>
         {imagens.map((imagem, index) => (
           <Carousel.Item key={index}>
-            {/* Adicionada classe padrão do Bootstrap */}
             <img
               className="d-block w-100"
               src={imagem}
               alt={`Slide ${index + 1}`}
             />
-            {/* Descriçao carrossel comentada */}
-            {/* <Carousel.Caption>
-              <h3>Slide {index + 1}</h3>
-              <p>
-                Texto descritivo para o slide {index + 1}. Edite conforme a
-                necessidade.
-              </p>
-            </Carousel.Caption> */}
           </Carousel.Item>
         ))}
       </Carousel>
-
-      {/* Produtos em destaque */}
       <div style={{ padding: "2rem 5rem", background: "#FAFAFA" }}>
         <h6 style={{ fontWeight: "bold" }}>PRODUTOS EM DESTAQUE</h6>
         <hr />
@@ -52,19 +45,19 @@ const Home = () => {
             justifyContent: "flex-start",
             alignItems: "flex-start",
             flexWrap: "wrap",
-            gap: "4rem",
+            gap: "3rem",
           }}
         >
-          {[...Array(3)].map((_, i) => (
+          {itens.map((produto) => (
             <div
-              key={i}
+              key={produto.CODIGO_ITEM}
               style={{
                 maxWidth: "200px",
                 display: "flex",
                 flexDirection: "column",
                 cursor: "pointer",
               }}
-              onClick={() => navigate(`/productDetails/${1}`)}
+              onClick={() => navigate(`/productDetails/${produto.CODIGO_ITEM}`)}
             >
               <div
                 style={{
@@ -74,7 +67,7 @@ const Home = () => {
                 }}
               ></div>
               <span style={{ fontSize: ".9rem", padding: ".3rem 0" }}>
-                Pulseira em aço elástico
+                {produto.NOME}
               </span>
               <span
                 style={{
@@ -83,10 +76,16 @@ const Home = () => {
                   fontSize: "0.9rem",
                 }}
               >
-                R$356,50
+                {Number(produto.VALOR).toLocaleString("pt-BR", {
+                  style: "currency",
+                  currency: "BRL"
+                })}
               </span>
               <span style={{ fontWeight: "bold", fontSize: "0.9rem" }}>
-                R$320,85 com Pix
+                {(Number(produto.VALOR) * (1 - 10 / 100)).toLocaleString("pt-BR", {
+                  style: "currency",
+                  currency: "BRL"
+                })} com Pix
               </span>
               <span
                 style={{
@@ -96,9 +95,12 @@ const Home = () => {
                   padding: ".3rem 0",
                 }}
               >
-                12x de R$34,47
+                12x de {Number(produto.VALOR / 12).toLocaleString("pt-BR", {
+                  style: "currency",
+                  currency: "BRL"
+                })}
               </span>
-              <span style={{ fontSize: "0.8rem" }}>PULSEIRAS</span>
+              <span style={{ fontSize: "0.8rem" }}>Em estoque: {produto.QUANTIDADE}</span>
             </div>
           ))}
         </div>
