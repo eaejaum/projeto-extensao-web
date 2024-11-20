@@ -25,13 +25,13 @@ const Home = () => {
               src={imagem}
               alt={`Slide ${index + 1}`}
             />
-            <Carousel.Caption>
+            {/* <Carousel.Caption>
               <h3>Slide {index + 1}</h3>
               <p>
                 Texto descritivo para o slide {index + 1}. Edite conforme a
                 necessidade.
               </p>
-            </Carousel.Caption>
+            </Carousel.Caption> */}
           </Carousel.Item>
         ))}
       </Carousel>
