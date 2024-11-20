@@ -14,6 +14,7 @@ import Home from './Routes/Home';
 import Error404 from './Routes/Error404';
 import Newsletter from './Routes/Newsletter';
 import ProductDetails from './Routes/ProductDetails';
+import Estoque from './Routes/Estoque';
 
 const router = createBrowserRouter([
   {
@@ -36,7 +37,13 @@ const router = createBrowserRouter([
       {
         path: "productDetails/1",
         element: <ProductDetails />
+      },
+
+      {
+        path: "estoque",
+        element: <Estoque />
       }
+
     ] 
   }
 ])
