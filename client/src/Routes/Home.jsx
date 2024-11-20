@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Carousel from "react-bootstrap/Carousel";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -15,6 +15,8 @@ const imagens = [discountOff, bf, rosa, rosao, rosinha];
 
 const Home = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {});
 
   return (
     <div>
@@ -60,7 +62,7 @@ const Home = () => {
                 maxWidth: "200px",
                 display: "flex",
                 flexDirection: "column",
-                cursor: "pointer"
+                cursor: "pointer",
               }}
               onClick={() => navigate(`/productDetails/${1}`)}
             >

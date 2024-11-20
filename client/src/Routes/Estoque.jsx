@@ -1,25 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 const Estoque = () => {
   const [itens, setItens] = useState([]); // Estado para armazenar os itens
 
   useEffect(() => {
-    fetch('http://localhost:3001/estoque', {
-      mode: 'no-cors',
-})  
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Falha na requisição');
-        }
-        return response.json();  // Converte a resposta para JSON
-      })
-      .then((data) => {
-        setItens(data);  // Armazena os dados recebidos no estado
-        console.log(data);
-      })
-      .catch((error) => {
-      });
-  }, []);  // O array vazio [] significa que isso vai rodar apenas uma vez, quando o componente for montado
+    fetch("http://localhost:3001/estoque")
+      .then((response) => response.json())
+      // 4. Setting *dogImage* to the image url that we received from the response above
+      .then((data) => setItens(data));
+  }, []);
 
   return (
     <div>
@@ -34,7 +23,9 @@ const Estoque = () => {
           </tr>
         </thead>
         <tbody>
-          {itens.map(item => (
+          {/* <p>{itens.teste}</p> */}
+          {/* <p>{itens.valor}</p> */}
+          {itens.map((item) => (
             <tr key={item.CODIGO_ITEM}>
               <td>{item.CODIGO_ITEM}</td>
               <td>{item.NOME}</td>
@@ -49,3 +40,4 @@ const Estoque = () => {
 };
 
 export default Estoque;
+

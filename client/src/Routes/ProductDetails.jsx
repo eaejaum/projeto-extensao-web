@@ -17,7 +17,6 @@ const ProductDetails = () => {
           width: "480px",
           height: "480px",
           border: "1px solid black",
-          width: "40%",
         }}
       ></div>
       <div
@@ -74,7 +73,7 @@ const ProductDetails = () => {
         >
           INCLUIR NO CARRINHO
         </button>
-        <div style={{ marginTop: "3rem"}}>
+        <div style={{ marginTop: "3rem" }}>
           <p>
             ✨ Pulseira em Aço Elástico para Berloque Inspiração Pandora: O
             Acessório Essencial para Brilhar! ✨ Transforme seu visual com a
