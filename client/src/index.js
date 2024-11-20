@@ -13,6 +13,7 @@ import Contact from './Routes/Contact';
 import Home from './Routes/Home';
 import Error404 from './Routes/Error404';
 import Newsletter from './Routes/Newsletter';
+import ProductDetails from './Routes/ProductDetails';
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: "newsletter",
         element: <Newsletter />
+      },
+      {
+        path: "productDetails/1",
+        element: <ProductDetails />
       }
     ] 
   }
