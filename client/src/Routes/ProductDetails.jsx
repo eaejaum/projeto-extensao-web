@@ -15,7 +15,12 @@ const ProductDetails = () => {
     }
   }, [productId]);
 
-  console.log(item);
+  const buyAtWhatsapp = () => {
+    const phoneNumber = "+5561984975160";
+    const message = encodeURIComponent(`Olá gostaria de mais informações sobre o produto, ${item[0].NOME}!`);
+    const whatsappURL = `https://wa.me/${phoneNumber}?text=${message}`;
+    window.open(whatsappURL, "_blank");
+  };
 
   return (
     <div
@@ -102,8 +107,9 @@ const ProductDetails = () => {
               }}
               onMouseEnter={() => setIsButtonHover(true)}
               onMouseLeave={() => setIsButtonHover(false)}
+              onClick={buyAtWhatsapp}
             >
-              INCLUIR NO CARRINHO
+              COMPRAR
             </button>
             <div style={{ marginTop: "3rem" }}>
               <p>
