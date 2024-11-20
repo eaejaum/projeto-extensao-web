@@ -25,12 +25,6 @@ const Header = () => {
           >
             Carrinho
           </NavLink>
-          <NavLink
-            to="/newsletter"
-            className={({ isActive }) => (isActive ? "ativo" : "")}
-          >
-            Newsletter
-          </NavLink>
         </div>
       </div>
     </nav>
