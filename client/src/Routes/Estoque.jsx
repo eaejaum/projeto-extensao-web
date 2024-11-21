@@ -177,31 +177,49 @@ const Estoque = () => {
         </div>
 
         {/* Tabela para exibir os itens */}
-        <h2>Lista de Itens</h2>
-        <table border="1">
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Valor</th>
-              <th>Quantidade</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            {itens.map((item) => (
-              <tr key={item.CODIGO_ITEM}>
-                <td>{item.NOME}</td>
-                <td>{item.VALOR}</td>
-                <td>{item.QUANTIDADE}</td>
-                <td>
-                  <button onClick={() => handleDelete(item.CODIGO_ITEM)}>
-                    Deletar
-                  </button>
-                </td>
+        <div style={{ padding: "3rem 0", display: "flex", flexDirection: "column" }}>
+          <h2 style={{ alignSelf: "center", paddingBottom: "1rem"}}>Lista de Itens</h2>
+          <table
+            className="table table-hover"
+            style={{ padding: "100px" }}
+            border="1"
+          >
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Valor</th>
+                <th>Quantidade</th>
+                <th>Ações</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {itens.map((item) => (
+                <tr key={item.CODIGO_ITEM}>
+                  <td>{item.NOME}</td>
+                  <td>
+                    {Number(item.VALOR).toLocaleString("pt-BR", {
+                      style: "currency",
+                      currency: "BRL",
+                    })}
+                  </td>
+                  <td>{item.QUANTIDADE}</td>
+                  <td>
+                    <button
+                      onClick={() => handleDelete(item.CODIGO_ITEM)}
+                      className="btn"
+                      style={{ border: "none" }}
+                    >
+                      <i
+                        style={{ color: "#D24633" }}
+                        className="bi bi-trash3-fill"
+                      ></i>
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
