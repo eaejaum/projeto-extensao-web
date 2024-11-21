@@ -5,5 +5,9 @@
 input::placeholder {
     color: #FFF; /* Cor do placeholder */
     opacity: 1; /* Controla a opacidade (1 é o padrão) */
-  }
-  
+}
+
+textarea::placeholder {
+    color: #FFF; /* Cor do placeholder */
+    opacity: 1; /* Controla a opacidade (1 é o padrão) */
+}
