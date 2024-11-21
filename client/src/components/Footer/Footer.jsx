@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 
 const Footer = () => {
+  const [instaIsHovered, setInstaIsHovered] = useState(false);
+
   return (
     <>
       <div
@@ -13,7 +15,7 @@ const Footer = () => {
       >
         <div
           style={{
-            border: "3px solid #BFA78A",
+            border: instaIsHovered ? "3px solid #D6C8B6" : "3px solid #BFA78A",
             borderRadius: "100%",
             width: "4.5rem",
             height: "4.5rem",
@@ -21,9 +23,20 @@ const Footer = () => {
             justifyContent: "center",
             alignItems: "center",
             cursor: "pointer",
+            transition: ".3s ease",
           }}
+          onMouseEnter={() => setInstaIsHovered(true)}
+          onMouseLeave={() => setInstaIsHovered(false)}
         >
-          <i class="bi bi-instagram fs-1" style={{ color: "#BFA78A" }}></i>
+          <a href="https://www.instagram.com/lbypratas" target="_blank">
+            <i
+              class="bi bi-instagram fs-1"
+              style={{
+                color: instaIsHovered ? "#D6C8B6" : "#BFA78A",
+                transition: ".3s ease",
+              }}
+            ></i>
+          </a>
         </div>
       </div>
       <div
