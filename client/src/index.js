@@ -1,51 +1,50 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap-icons/font/bootstrap-icons.css';
-import { 
-  createBrowserRouter,
-  RouterProvider
-} from 'react-router-dom'
-import Contact from './Routes/Contact';
-import Home from './Routes/Home';
-import Error404 from './Routes/Error404';
-import ProductDetails from './Routes/ProductDetails';
-import Estoque from './Routes/Estoque';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Contact from "./Routes/Contact";
+import Home from "./Routes/Home";
+import Error404 from "./Routes/Error404";
+import ProductDetails from "./Routes/ProductDetails";
+import Estoque from "./Routes/Estoque";
+import { HandleSearchContextProvider } from "./context/HandleSearchContext";
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <App />,
     errorElement: <Error404 />,
     children: [
       {
         path: "/",
-        element: <Home />
+        element: <Home />,
       },
       {
         path: "contact",
-        element: <Contact />
+        element: <Contact />,
       },
       {
         path: "productDetails/:CODIGO_ITEM",
-        element: <ProductDetails />
+        element: <ProductDetails />,
       },
       {
         path: "estoque",
-        element: <Estoque />
-      }
+        element: <Estoque />,
+      },
+    ],
+  },
+]);
 
-    ] 
-  }
-])
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router}/>
+    <HandleSearchContextProvider>
+      <RouterProvider router={router} />
+    </HandleSearchContextProvider>
   </React.StrictMode>
 );
 
