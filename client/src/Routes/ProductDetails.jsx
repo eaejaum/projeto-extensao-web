@@ -16,7 +16,7 @@ const ProductDetails = () => {
   }, [productId]);
 
   const buyAtWhatsapp = () => {
-    const phoneNumber = "+5561984975160";
+    const phoneNumber = "+556132998504";
     const message = encodeURIComponent(`Olá gostaria de mais informações sobre o produto, ${item[0].NOME}!`);
     const whatsappURL = `https://wa.me/${phoneNumber}?text=${message}`;
     window.open(whatsappURL, "_blank");
