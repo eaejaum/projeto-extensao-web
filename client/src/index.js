@@ -33,7 +33,6 @@ const router = createBrowserRouter([
         path: "productDetails/:CODIGO_ITEM",
         element: <ProductDetails />
       },
-
       {
         path: "estoque",
         element: <Estoque />
