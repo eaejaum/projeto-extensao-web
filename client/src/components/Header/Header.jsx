@@ -1,11 +1,12 @@
 import "./Header.css";
 import { NavLink } from "react-router-dom";
+import logo from "../../assets/main-logo.png";
 
 const Header = () => {
   return (
     <nav className="navbar" style={{ background: "#FAFAFA", padding: "2rem" }}>
       <div className="container-fluid">
-        <span className="navbar-brand mb-0 h1">L&BY Pratas</span>
+        <span className="navbar-brand mb-0 h1"><img src={logo} width={200}/></span>
         <div className="navegacao">
           <NavLink
             to="/"
