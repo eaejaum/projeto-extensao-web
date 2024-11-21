@@ -70,6 +70,24 @@ app.post("/estoque", (req, res) => {
   });
 });
 
+app.delete("/estoque/:id", (req, res) => {
+  const { id } = req.params;
+  const query = "DELETE FROM ITEM WHERE CODIGO_ITEM = ?";
+
+  db.query(query, [id], (err, result) => {
+    if (err) {
+      console.error("Erro ao deletar item:", err);
+      return res.status(500).json({ error: "Erro ao deletar item" });
+    }
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "Item não encontrado" });
+    }
+
+    res.status(200).json({ message: "Item deletado com sucesso" });
+  });
+});
+
 // Inicializando o servidor na porta 3001
 app.listen(3001, () => {
   console.log("Servidor rodando na porta 3001");
