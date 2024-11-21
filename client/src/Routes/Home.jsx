@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Carousel from "react-bootstrap/Carousel";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -9,6 +9,7 @@ import bf from "../assets/bf.jpg";
 import rosa from "../assets/ROSA.jpg";
 import rosao from "../assets/ROSAO.jpg";
 import rosinha from "../assets/ROSINHA.jpg";
+import { HandleSearchContext } from "../context/HandleSearchContext";
 
 // Array de imagens importadas
 const imagens = [discountOff, bf, rosa, rosao, rosinha];
@@ -16,6 +17,7 @@ const imagens = [discountOff, bf, rosa, rosao, rosinha];
 const Home = () => {
   const navigate = useNavigate();
   const [itens, setItens] = useState([]);
+  const { filteredProducts } = useContext(HandleSearchContext);
 
   useEffect(() => {
     fetch("http://localhost:3001/estoque")
@@ -48,61 +50,76 @@ const Home = () => {
             gap: "3rem",
           }}
         >
-          {itens.map((produto) => (
-            <div
-              key={produto.CODIGO_ITEM}
-              style={{
-                maxWidth: "200px",
-                display: "flex",
-                flexDirection: "column",
-                cursor: "pointer",
-              }}
-              onClick={() => navigate(`/productDetails/${produto.CODIGO_ITEM}`)}
-            >
+          {filteredProducts.length > 0 ? (
+            filteredProducts.map((produto) => (
               <div
+                key={produto.CODIGO_ITEM}
                 style={{
-                  width: "216px",
-                  height: "216px",
-                  border: "1px solid black",
+                  maxWidth: "200px",
+                  display: "flex",
+                  flexDirection: "column",
+                  cursor: "pointer",
                 }}
-              ></div>
-              <span style={{ fontSize: ".9rem", padding: ".3rem 0" }}>
-                {produto.NOME}
-              </span>
-              <span
-                style={{
-                  fontWeight: "bold",
-                  color: "#BFA78A",
-                  fontSize: "0.9rem",
-                }}
+                onClick={() =>
+                  navigate(`/productDetails/${produto.CODIGO_ITEM}`)
+                }
               >
-                {Number(produto.VALOR).toLocaleString("pt-BR", {
-                  style: "currency",
-                  currency: "BRL"
-                })}
-              </span>
-              <span style={{ fontWeight: "bold", fontSize: "0.9rem" }}>
-                {(Number(produto.VALOR) * (1 - 10 / 100)).toLocaleString("pt-BR", {
-                  style: "currency",
-                  currency: "BRL"
-                })} com Pix
-              </span>
-              <span
-                style={{
-                  fontWeight: "bold",
-                  fontSize: "0.9rem",
-                  color: "#EDD6B2",
-                  padding: ".3rem 0",
-                }}
-              >
-                12x de {Number(produto.VALOR / 12).toLocaleString("pt-BR", {
-                  style: "currency",
-                  currency: "BRL"
-                })}
-              </span>
-              <span style={{ fontSize: "0.8rem" }}>Em estoque: {produto.QUANTIDADE}</span>
-            </div>
-          ))}
+                <div
+                  style={{
+                    width: "216px",
+                    height: "216px",
+                    border: "1px solid black",
+                  }}
+                ></div>
+                <span style={{ fontSize: ".9rem", padding: ".3rem 0" }}>
+                  {produto.NOME}
+                </span>
+                <span
+                  style={{
+                    fontWeight: "bold",
+                    color: "#BFA78A",
+                    fontSize: "0.9rem",
+                  }}
+                >
+                  {Number(produto.VALOR).toLocaleString("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  })}
+                </span>
+                <span style={{ fontWeight: "bold", fontSize: "0.9rem" }}>
+                  {(Number(produto.VALOR) * (1 - 10 / 100)).toLocaleString(
+                    "pt-BR",
+                    {
+                      style: "currency",
+                      currency: "BRL",
+                    }
+                  )}{" "}
+                  com Pix
+                </span>
+                <span
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "0.9rem",
+                    color: "#EDD6B2",
+                    padding: ".3rem 0",
+                  }}
+                >
+                  12x de{" "}
+                  {Number(produto.VALOR / 12).toLocaleString("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  })}
+                </span>
+                <span style={{ fontSize: "0.8rem" }}>
+                  Em estoque: {produto.QUANTIDADE}
+                </span>
+              </div>
+            ))
+          ) : (
+            <p>
+              Não existem produtos com este nome...
+            </p>
+          )}
         </div>
       </div>
     </div>
