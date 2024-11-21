@@ -117,7 +117,7 @@ const Contact = () => {
       <div style={{ padding: "2rem 5rem", background: "#FAFAFA" }}>
         <h6 style={{ fontWeight: "bold" }}>DADOS DE CONTATO</h6>
         <hr />
-        <p>lbypratas@gmail.com</p>
+        <p><i class="bi bi-envelope-at-fill"></i>  lbypratas@gmail.com</p>
       </div>
     </>
   );
