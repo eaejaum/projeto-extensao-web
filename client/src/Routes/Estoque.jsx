@@ -2,34 +2,23 @@ import React, { useState, useEffect } from "react";
 
 const Estoque = () => {
   const [itens, setItens] = useState([]); // Estado para armazenar os itens
-  const [formData, setFormData] = useState({
+  const [form, setForm] = useState({
     nome: "",
     valor: "",
     quantidade: "",
-  }); // Estado para o formulário
+  }); // Estado para o formulário de cadastro
 
-  // Fetch inicial para carregar os itens
+  // Função para buscar os itens
   useEffect(() => {
     fetch("http://localhost:3001/estoque")
       .then((response) => response.json())
-      .then((data) => {
-        setItens(data);
-        console.log(data);
-      });
+      .then((data) => setItens(data))
+      .catch((err) => console.error("Erro ao buscar itens:", err));
   }, []);
 
-  // Função para lidar com mudanças no formulário
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  // Função para enviar o formulário
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  // Função para cadastrar um novo item
+  const handleSubmit = (event) => {
+    event.preventDefault();
 
     fetch("http://localhost:3001/estoque", {
       method: "POST",
@@ -37,33 +26,80 @@ const Estoque = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        nome: formData.nome,
-        valor: parseFloat(formData.valor),
-        quantidade: parseInt(formData.quantidade, 10),
+        nome: form.nome,
+        valor: parseFloat(form.valor),
+        quantidade: parseInt(form.quantidade),
       }),
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Erro ao cadastrar item");
+          throw new Error("Erro ao cadastrar produto");
         }
         return response.json();
       })
       .then((newItem) => {
-        // Atualizar a lista de itens com o novo item
-        setItens((prevItens) => [...prevItens, newItem]);
-        // Resetar o formulário
-        setFormData({ nome: "", valor: "", quantidade: "" });
-        alert("Produto cadastrado com sucesso!");
+        setItens((prevItens) => [...prevItens, newItem]); // Atualiza a lista com o novo item
+        setForm({ nome: "", valor: "", quantidade: "" }); // Limpa o formulário
       })
-      .catch((error) => {
-        console.error("Erro ao cadastrar produto:", error);
-        alert("Ocorreu um erro ao cadastrar o produto.");
-      });
+      .catch((err) => console.error("Erro ao cadastrar produto:", err));
+  };
+
+  // Função para deletar um item
+  const handleDelete = (id) => {
+    fetch(`http://localhost:3001/estoque/${id}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Erro ao deletar item");
+        }
+        return response.json();
+      })
+      .then(() => {
+        setItens((prevItens) => prevItens.filter((item) => item.CODIGO_ITEM !== id)); // Remove o item deletado da lista
+      })
+      .catch((err) => console.error("Erro ao deletar item:", err));
   };
 
   return (
     <div>
-      <h1>Lista de Itens</h1>
+      <h1>Gerenciamento de Estoque</h1>
+
+      {/* Formulário para cadastrar novos itens */}
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Nome:</label>
+          <input
+            type="text"
+            value={form.nome}
+            onChange={(e) => setForm({ ...form, nome: e.target.value })}
+            required
+          />
+        </div>
+        <div>
+          <label>Valor:</label>
+          <input
+            type="number"
+            step="0.01"
+            value={form.valor}
+            onChange={(e) => setForm({ ...form, valor: e.target.value })}
+            required
+          />
+        </div>
+        <div>
+          <label>Quantidade:</label>
+          <input
+            type="number"
+            value={form.quantidade}
+            onChange={(e) => setForm({ ...form, quantidade: e.target.value })}
+            required
+          />
+        </div>
+        <button type="submit">Cadastrar Produto</button>
+      </form>
+
+      {/* Tabela para exibir os itens */}
+      <h2>Lista de Itens</h2>
       <table border="1">
         <thead>
           <tr>
@@ -71,6 +107,7 @@ const Estoque = () => {
             <th>Nome</th>
             <th>Valor</th>
             <th>Quantidade</th>
+            <th>Ações</th>
           </tr>
         </thead>
         <tbody>
@@ -80,52 +117,13 @@ const Estoque = () => {
               <td>{item.NOME}</td>
               <td>{item.VALOR}</td>
               <td>{item.QUANTIDADE}</td>
+              <td>
+                <button onClick={() => handleDelete(item.CODIGO_ITEM)}>Deletar</button>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
-
-      <h2>Cadastrar Novo Produto</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>
-            Nome:
-            <input
-              type="text"
-              name="nome"
-              value={formData.nome}
-              onChange={handleInputChange}
-              required
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            Valor:
-            <input
-              type="number"
-              name="valor"
-              step="0.01"
-              value={formData.valor}
-              onChange={handleInputChange}
-              required
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            Quantidade:
-            <input
-              type="number"
-              name="quantidade"
-              value={formData.quantidade}
-              onChange={handleInputChange}
-              required
-            />
-          </label>
-        </div>
-        <button type="submit">Cadastrar Produto</button>
-      </form>
     </div>
   );
 };
