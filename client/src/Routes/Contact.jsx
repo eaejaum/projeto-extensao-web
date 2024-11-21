@@ -12,8 +12,8 @@ const Contact = () => {
 
     const templateParams = {
       from_name: userName,
-      message: message,
       email: email,
+      message: message,
     }
 
     emailjs.send("service_hg3qo4b", "template_vx9rava", templateParams, "MDQKYAbDfNnfKI1IO").then((response) => {
