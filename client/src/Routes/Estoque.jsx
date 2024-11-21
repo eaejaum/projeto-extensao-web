@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { HandleSearchContext } from "../context/HandleSearchContext";
 
 const Estoque = () => {
-  const [itens, setItens] = useState([]); // Estado para armazenar os itens
   const [isButtonHover, setIsButtonHover] = useState(false);
+  const { products, setProducts } = useContext(HandleSearchContext)
   const [form, setForm] = useState({
     nome: "",
     valor: "",
@@ -13,7 +14,7 @@ const Estoque = () => {
   useEffect(() => {
     fetch("http://localhost:3001/estoque")
       .then((response) => response.json())
-      .then((data) => setItens(data))
+      .then((data) => setProducts(data))
       .catch((err) => console.error("Erro ao buscar itens:", err));
   }, []);
 
@@ -39,7 +40,7 @@ const Estoque = () => {
         return response.json();
       })
       .then((newItem) => {
-        setItens((prevItens) => [...prevItens, newItem]); // Atualiza a lista com o novo item
+        setProducts((prevProducts) => [...prevProducts, newItem]); // Atualiza a lista com o novo item
         setForm({ nome: "", valor: "", quantidade: "" }); // Limpa o formulário
       })
       .catch((err) => console.error("Erro ao cadastrar produto:", err));
@@ -57,8 +58,8 @@ const Estoque = () => {
         return response.json();
       })
       .then(() => {
-        setItens((prevItens) =>
-          prevItens.filter((item) => item.CODIGO_ITEM !== id)
+        setProducts((prevProducts) =>
+          prevProducts.filter((item) => item.CODIGO_ITEM !== id)
         ); // Remove o item deletado da lista
       })
       .catch((err) => console.error("Erro ao deletar item:", err));
@@ -181,7 +182,7 @@ const Estoque = () => {
 
         {/* Tabela para exibir os itens */}
         <div style={{ padding: "3rem 0", display: "flex", flexDirection: "column" }}>
-          <h2 style={{ alignSelf: "center", paddingBottom: "1rem"}}>Lista de Itens</h2>
+          <h2 style={{ alignSelf: "center", paddingBottom: "1rem" }}>Lista de Itens</h2>
           <table
             className="table table-hover"
             style={{ padding: "100px" }}
@@ -196,7 +197,7 @@ const Estoque = () => {
               </tr>
             </thead>
             <tbody>
-              {itens.map((item) => (
+              {products.map((item) => (
                 <tr key={item.CODIGO_ITEM}>
                   <td>{item.NOME}</td>
                   <td>

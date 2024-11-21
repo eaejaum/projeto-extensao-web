@@ -1,7 +1,31 @@
 import React, { useState } from "react";
+import emailjs from 'emailjs-com';
 
 const Contact = () => {
   const [isButtonHover, setIsButtonHover] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const templateParams = {
+      from_name: userName,
+      message: message,
+      email: email,
+    }
+
+    emailjs.send("service_hg3qo4b", "template_vx9rava", templateParams, "MDQKYAbDfNnfKI1IO").then((response) => {
+      console.log("EMAIL ENVIADO", response.status, response.text)
+      setUserName("");
+      setMessage("");
+      setEmail("");
+
+    }, (err) => {
+      console.log(err);
+    })
+  }
 
   return (
     <>
@@ -25,7 +49,7 @@ const Contact = () => {
             CONTATO
           </h1>
         </div>
-        <form style={{ width: "30%" }}>
+        <form style={{ width: "30%" }} onSubmit={handleSubmit}>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <div className="mb-3">
               <input
@@ -33,6 +57,8 @@ const Contact = () => {
                 type="text"
                 id="nomeCompleto"
                 placeholder="Nome Completo"
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
                 style={{
                   background: "transparent",
                   width: "100%",
@@ -50,6 +76,8 @@ const Contact = () => {
                 type="email"
                 id="email"
                 placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 style={{
                   background: "transparent",
                   width: "100%",
@@ -62,27 +90,13 @@ const Contact = () => {
               />
             </div>
             <div className="mb-3">
-              <input
-                className="input-placeholder"
-                type="number"
-                id="telefone"
-                placeholder="Telefone (Opcional)"
-                style={{
-                  background: "transparent",
-                  width: "100%",
-                  border: "2px solid #FFF",
-                  outline: "none",
-                  padding: ".5rem",
-                  color: "#FFF",
-                }}
-              />
-            </div>
-            <div className="mb-3">
               <textarea
                 type="textarea"
                 rows={3}
                 id="mensagem"
-                placeholder="Mensagem (Opcional)"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                placeholder="Mensagem"
                 style={{
                   background: "transparent",
                   width: "100%",
@@ -91,6 +105,7 @@ const Contact = () => {
                   padding: ".5rem",
                   color: "#FFF",
                 }}
+                required
               />
             </div>
             <div>

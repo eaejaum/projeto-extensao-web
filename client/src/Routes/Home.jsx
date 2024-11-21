@@ -16,13 +16,12 @@ const imagens = [discountOff, bf, rosa, rosao, rosinha];
 
 const Home = () => {
   const navigate = useNavigate();
-  const [itens, setItens] = useState([]);
-  const { filteredProducts } = useContext(HandleSearchContext);
+  const { filteredProducts, products, setProducts } = useContext(HandleSearchContext);
 
   useEffect(() => {
     fetch("http://localhost:3001/estoque")
       .then((response) => response.json())
-      .then((data) => setItens(data));
+      .then((data) => setProducts(data));
   }, []);
 
   return (

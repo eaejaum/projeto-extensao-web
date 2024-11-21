@@ -73,12 +73,12 @@ const Header = ({ scrollToProducts }) => {
           >
             Contato
           </NavLink>
-          <NavLink
+          {/* <NavLink
             to="/shoppingcart"
             className={({ isActive }) => (isActive ? "ativo" : "")}
           >
             Carrinho
-          </NavLink>
+          </NavLink> */}
         </div>
       </div>
     </nav>

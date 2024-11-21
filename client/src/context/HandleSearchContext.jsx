@@ -35,7 +35,7 @@ export const HandleSearchContextProvider = ({ children }) => {
   );
 
   return (
-    <HandleSearchContext.Provider value={{ searchTerm, setSearchTerm, handleSearchTerm, filteredProducts, loading }}>
+    <HandleSearchContext.Provider value={{ searchTerm, products, setProducts, setSearchTerm, handleSearchTerm, filteredProducts, loading }}>
       {children}
     </HandleSearchContext.Provider>
   );
