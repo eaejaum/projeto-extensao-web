@@ -2,7 +2,7 @@
     font-family: 'Montserrat';   
 }
 
-input::placeholder {
+.input-placeholder::placeholder {
     color: #FFF; /* Cor do placeholder */
     opacity: 1; /* Controla a opacidade (1 é o padrão) */
 }

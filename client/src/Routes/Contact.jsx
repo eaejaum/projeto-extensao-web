@@ -29,6 +29,7 @@ const Contact = () => {
           <div style={{ display: "flex", flexDirection: "column" }}>
             <div className="mb-3">
               <input
+                className="input-placeholder"
                 type="text"
                 id="nomeCompleto"
                 placeholder="Nome Completo"
@@ -45,6 +46,7 @@ const Contact = () => {
             </div>
             <div className="mb-3">
               <input
+                className="input-placeholder"
                 type="email"
                 id="email"
                 placeholder="Email"
@@ -61,6 +63,7 @@ const Contact = () => {
             </div>
             <div className="mb-3">
               <input
+                className="input-placeholder"
                 type="number"
                 id="telefone"
                 placeholder="Telefone (Opcional)"

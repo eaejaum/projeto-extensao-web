@@ -88,6 +88,7 @@ const Estoque = () => {
                   }}
                 >
                   <input
+                    className="input-placeholder"
                     type="text"
                     value={form.nome}
                     onChange={(e) => setForm({ ...form, nome: e.target.value })}
@@ -109,6 +110,7 @@ const Estoque = () => {
                   }}
                 >
                   <input
+                    className="input-placeholder"
                     type="number"
                     step="0.01"
                     value={form.valor}
@@ -133,6 +135,7 @@ const Estoque = () => {
                   }}
                 >
                   <input
+                    className="input-placeholder"
                     type="number"
                     value={form.quantidade}
                     onChange={(e) =>
