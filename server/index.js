@@ -70,7 +70,7 @@ app.post("/estoque", (req, res) => {
   });
 });
 
-app.put("/estoque/:id", (req, res) => {
+app.put("/estoque/editar/:id", (req, res) => {
   const productId = req.params.id;
   const { nome, valor, quantidade } = req.body;
 

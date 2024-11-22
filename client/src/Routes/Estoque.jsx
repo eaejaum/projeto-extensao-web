@@ -66,7 +66,7 @@ const Estoque = () => {
   };
 
   const handleUpdate = (id, updatedData) => {
-    fetch(`http://localhost:3001/estoque/${id}`, {
+    fetch(`http://localhost:3001/estoque/editar/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -244,7 +244,7 @@ const Estoque = () => {
                       ></i>
                     </button>
                     <button
-                      onClick={() => handleUpdate(item.CODIGO_ITEM, )}
+                      // onClick={() => handleUpdate(item.CODIGO_ITEM, )}
                       className="btn"
                       style={{ border: "none" }}
                     >
