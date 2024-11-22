@@ -65,6 +65,31 @@ const Estoque = () => {
       .catch((err) => console.error("Erro ao deletar item:", err));
   };
 
+  const handleUpdate = (id, updatedData) => {
+    fetch(`http://localhost:3001/estoque/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Erro ao atualizar item");
+        }
+        return response.json();
+      })
+      .then((updatedItem) => {
+        setProducts((prevProducts) =>
+          prevProducts.map((item) =>
+            item.CODIGO_ITEM === id ? { ...item, ...updatedItem } : item
+          )
+        );
+      })
+      .catch((err) => console.error("Erro ao atualizar item:", err));
+  };
+
+
   return (
     <div>
       <div style={{ padding: "1rem 3rem", background: "#FAFAFA" }}>
@@ -217,6 +242,13 @@ const Estoque = () => {
                         style={{ color: "#D24633" }}
                         className="bi bi-trash3-fill"
                       ></i>
+                    </button>
+                    <button
+                      onClick={() => handleUpdate(item.CODIGO_ITEM, )}
+                      className="btn"
+                      style={{ border: "none" }}
+                    >
+                      <i class="bi bi-pencil-square"></i>
                     </button>
                   </td>
                 </tr>

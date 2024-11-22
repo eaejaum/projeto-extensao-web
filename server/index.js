@@ -70,6 +70,21 @@ app.post("/estoque", (req, res) => {
   });
 });
 
+app.put("/estoque/:id", (req, res) => {
+  const productId = req.params.id;
+  const { nome, valor, quantidade } = req.body;
+
+  const SQL = "UPDATE ITEM SET NOME = ?, VALOR = ?, QUANTIDADE = ?, WHERE CODIGO_ITEM = ?";
+  db.query(SQL, [nome, valor, quantidade], (err, result) => {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ error: "Erro ao editar produto" });
+    } else {
+      res.json({ message: "Produto editado com sucesso" });
+    }
+  });
+});
+
 app.delete("/estoque/:id", (req, res) => {
   const { id } = req.params;
   const query = "DELETE FROM ITEM WHERE CODIGO_ITEM = ?";
