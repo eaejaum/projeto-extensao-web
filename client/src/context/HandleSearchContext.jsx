@@ -30,10 +30,12 @@ export const HandleSearchContextProvider = ({ children }) => {
     setSearchTerm(event.target.value);
   };
 
-  const filteredProducts = products.filter((item) =>
-    item.NOME.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
+  const filteredProducts = Array.isArray(products)
+  ? products.filter((item) =>
+      item.NOME.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  : [];
+  
   return (
     <HandleSearchContext.Provider value={{ searchTerm, products, setProducts, setSearchTerm, handleSearchTerm, filteredProducts, loading }}>
       {children}
