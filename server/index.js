@@ -2,7 +2,10 @@ const express = require("express");
 const app = express();
 const mysql = require("mysql2");
 const cors = require("cors");
+const multer = require("multer");
+const path = require("path");
 
+// Configuração do banco de dados
 const db = mysql.createPool({
   host: "localhost",
   user: "root",
@@ -10,9 +13,22 @@ const db = mysql.createPool({
   database: "lbypratas",
 });
 
+// Configuração do multer para salvar imagens na pasta 'uploads/'
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/"); // Certifique-se de que a pasta 'uploads/' existe
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname)); // Gera um nome único para o arquivo
+  },
+});
+
+const upload = multer({ storage });
+
 // Middlewares necessários
 app.use(cors());
 app.use(express.json()); // Para processar JSON no corpo das requisições
+app.use("/uploads", express.static("uploads")); // Servir arquivos estáticos da pasta 'uploads'
 
 // Endpoint para listar usuários
 app.get("/", (req, res) => {
@@ -48,12 +64,14 @@ app.get("/estoque/:numberProductId", (req, res) => {
   });
 });
 
-// Endpoint para cadastrar um novo item no estoque
-app.post("/estoque", (req, res) => {
+// Endpoint para cadastrar um novo item no estoque (com foto opcional)
+app.post("/estoque", upload.single("foto"), (req, res) => {
   const { nome, valor, quantidade } = req.body;
-  const query = "INSERT INTO ITEM (NOME, VALOR, QUANTIDADE) VALUES (?, ?, ?)";
+  const foto = req.file ? `/uploads/${req.file.filename}` : null;
 
-  db.query(query, [nome, valor, quantidade], (err, result) => {
+  const query =
+    "INSERT INTO ITEM (NOME, VALOR, QUANTIDADE, FOTO) VALUES (?, ?, ?, ?)";
+  db.query(query, [nome, valor, quantidade, foto], (err, result) => {
     if (err) {
       console.error("Erro ao cadastrar produto:", err);
       return res.status(500).json({ error: "Erro ao cadastrar produto" });
@@ -64,27 +82,43 @@ app.post("/estoque", (req, res) => {
       NOME: nome,
       VALOR: valor,
       QUANTIDADE: quantidade,
+      FOTO: foto,
     };
 
     res.status(201).json(newItem);
   });
 });
 
-app.put("/estoque/editar/:id", (req, res) => {
+// Endpoint para editar item do estoque (com foto opcional)
+app.put("/estoque/editar/:id", upload.single("foto"), (req, res) => {
   const productId = req.params.id;
   const { nome, valor, quantidade } = req.body;
+  const foto = req.file ? `/uploads/${req.file.filename}` : null;
 
-  const SQL = "UPDATE ITEM SET NOME = ?, VALOR = ?, QUANTIDADE = ? WHERE CODIGO_ITEM = ?";
-  db.query(SQL, [nome, valor, quantidade, productId], (err, result) => {
+  let query;
+  let params;
+
+  if (foto) {
+    query =
+      "UPDATE ITEM SET NOME = ?, VALOR = ?, QUANTIDADE = ?, FOTO = ? WHERE CODIGO_ITEM = ?";
+    params = [nome, valor, quantidade, foto, productId];
+  } else {
+    query =
+      "UPDATE ITEM SET NOME = ?, VALOR = ?, QUANTIDADE = ? WHERE CODIGO_ITEM = ?";
+    params = [nome, valor, quantidade, productId];
+  }
+
+  db.query(query, params, (err, result) => {
     if (err) {
       console.error(err);
-      res.status(500).json({ error: "Erro ao editar produto" });
-    } else {
-      res.json({ message: "Produto editado com sucesso" });
+      return res.status(500).json({ error: "Erro ao editar produto" });
     }
+
+    res.json({ message: "Produto editado com sucesso" });
   });
 });
 
+// Endpoint para deletar um item do estoque
 app.delete("/estoque/:id", (req, res) => {
   const { id } = req.params;
   const query = "DELETE FROM ITEM WHERE CODIGO_ITEM = ?";

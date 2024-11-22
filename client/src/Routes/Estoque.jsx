@@ -11,7 +11,8 @@ const Estoque = () => {
     nome: "",
     valor: "",
     quantidade: "",
-  }); // Estado para o formulário de cadastro
+    foto: null, // Campo para a foto
+  });
 
   // Função para buscar os itens
   useEffect(() => {
@@ -19,22 +20,21 @@ const Estoque = () => {
       .then((response) => response.json())
       .then((data) => setProducts(data))
       .catch((err) => console.error("Erro ao buscar itens:", err));
-  }, []);
+  }, );
 
   // Função para cadastrar um novo item
   const handleSubmit = (event) => {
     event.preventDefault();
 
+    const formData = new FormData();
+    formData.append("nome", form.nome);
+    formData.append("valor", parseFloat(form.valor));
+    formData.append("quantidade", parseInt(form.quantidade));
+    if (form.foto) formData.append("foto", form.foto);
+
     fetch("http://localhost:3001/estoque", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        nome: form.nome,
-        valor: parseFloat(form.valor),
-        quantidade: parseInt(form.quantidade),
-      }),
+      body: formData,
     })
       .then((response) => {
         if (!response.ok) {
@@ -43,8 +43,8 @@ const Estoque = () => {
         return response.json();
       })
       .then((newItem) => {
-        setProducts((prevProducts) => [...prevProducts, newItem]); // Atualiza a lista com o novo item
-        setForm({ nome: "", valor: "", quantidade: "" }); // Limpa o formulário
+        setProducts((prevProducts) => [...prevProducts, newItem]);
+        setForm({ nome: "", valor: "", quantidade: "", foto: null }); // Limpa o formulário
       })
       .catch((err) => console.error("Erro ao cadastrar produto:", err));
   };
@@ -68,7 +68,7 @@ const Estoque = () => {
       .then(() => {
         setProducts((prevProducts) =>
           prevProducts.filter((item) => item.CODIGO_ITEM !== id)
-        ); // Remove o item deletado da lista
+        );
       })
       .catch((err) => console.error("Erro ao deletar item:", err));
   };
@@ -81,7 +81,7 @@ const Estoque = () => {
             className="card text-center mb-3"
             style={{ width: "100%", color: "#fff", background: "#A2907A" }}
           >
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} encType="multipart/form-data">
               <div className="card-body">
                 <h3 className="card-title">Cadastro de Produto</h3>
                 <div
@@ -92,11 +92,7 @@ const Estoque = () => {
                     justifyContent: "center",
                   }}
                 >
-                  <div
-                    style={{
-                      paddingBottom: ".5rem",
-                    }}
-                  >
+                  <div style={{ paddingBottom: ".5rem" }}>
                     <input
                       className="input-placeholder"
                       type="text"
@@ -116,11 +112,7 @@ const Estoque = () => {
                       required
                     />
                   </div>
-                  <div
-                    style={{
-                      paddingBottom: ".5rem",
-                    }}
-                  >
+                  <div style={{ paddingBottom: ".5rem" }}>
                     <input
                       className="input-placeholder"
                       type="number"
@@ -141,11 +133,7 @@ const Estoque = () => {
                       required
                     />
                   </div>
-                  <div
-                    style={{
-                      paddingBottom: ".5rem",
-                    }}
-                  >
+                  <div style={{ paddingBottom: ".5rem" }}>
                     <input
                       className="input-placeholder"
                       type="number"
@@ -163,6 +151,16 @@ const Estoque = () => {
                         color: "#FFF",
                       }}
                       required
+                    />
+                  </div>
+                  <div style={{ paddingBottom: ".5rem" }}>
+                    <input
+                      type="file"
+                      onChange={(e) =>
+                        setForm({ ...form, foto: e.target.files[0] })
+                      }
+                      accept="image/*"
+                      style={{color: "#FFF" }}
                     />
                   </div>
                   <div>
@@ -212,6 +210,7 @@ const Estoque = () => {
                   <th>Nome</th>
                   <th>Valor</th>
                   <th>Quantidade</th>
+                  <th>Foto</th>
                   <th>Ações</th>
                 </tr>
               </thead>
@@ -227,6 +226,17 @@ const Estoque = () => {
                     </td>
                     <td>{item.QUANTIDADE}</td>
                     <td>
+                      {item.FOTO ? (
+                        <img
+                          src={`http://localhost:3001${item.FOTO}`}
+                          alt={item.NOME}
+                          style={{ width: "50px", height: "50px", objectFit: "cover" }}
+                        />
+                      ) : (
+                        "Sem foto"
+                      )}
+                    </td>
+                    <td>
                       <button
                         onClick={() => handleDelete(item.CODIGO_ITEM)}
                         className="btn"
@@ -240,7 +250,7 @@ const Estoque = () => {
                       <button
                         onClick={() => openEditModal(item)}
                         className="btn"
-                        style={{ border: "none" }}  
+                        style={{ border: "none" }}
                       >
                         <i className="bi bi-pencil-square"></i>
                       </button>
