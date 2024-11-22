@@ -74,8 +74,8 @@ app.put("/estoque/editar/:id", (req, res) => {
   const productId = req.params.id;
   const { nome, valor, quantidade } = req.body;
 
-  const SQL = "UPDATE ITEM SET NOME = ?, VALOR = ?, QUANTIDADE = ?, WHERE CODIGO_ITEM = ?";
-  db.query(SQL, [nome, valor, quantidade], (err, result) => {
+  const SQL = "UPDATE ITEM SET NOME = ?, VALOR = ?, QUANTIDADE = ? WHERE CODIGO_ITEM = ?";
+  db.query(SQL, [nome, valor, quantidade, productId], (err, result) => {
     if (err) {
       console.error(err);
       res.status(500).json({ error: "Erro ao editar produto" });

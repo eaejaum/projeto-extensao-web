@@ -30,7 +30,7 @@ const Footer = () => {
         >
           <a href="https://www.instagram.com/lbypratas" target="_blank">
             <i
-              class="bi bi-instagram fs-1"
+              className="bi bi-instagram fs-1"
               style={{
                 color: instaIsHovered ? "#D6C8B6" : "#BFA78A",
                 transition: ".3s ease",

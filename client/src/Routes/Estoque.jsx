@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import { HandleSearchContext } from "../context/HandleSearchContext";
+import EditProductModal from "../components/EditProductModal";
 
 const Estoque = () => {
   const [isButtonHover, setIsButtonHover] = useState(false);
-  const { products, setProducts } = useContext(HandleSearchContext)
+  const [isOpen, setIsOpen] = useState(false);
+  const { products, setProducts } = useContext(HandleSearchContext);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const [form, setForm] = useState({
     nome: "",
     valor: "",
@@ -46,6 +49,11 @@ const Estoque = () => {
       .catch((err) => console.error("Erro ao cadastrar produto:", err));
   };
 
+  const openEditModal = (product) => {
+    setSelectedProduct(product);
+    setIsOpen(true);
+  };
+
   // Função para deletar um item
   const handleDelete = (id) => {
     fetch(`http://localhost:3001/estoque/${id}`, {
@@ -65,199 +73,191 @@ const Estoque = () => {
       .catch((err) => console.error("Erro ao deletar item:", err));
   };
 
-  const handleUpdate = (id, updatedData) => {
-    fetch(`http://localhost:3001/estoque/editar/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updatedData),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Erro ao atualizar item");
-        }
-        return response.json();
-      })
-      .then((updatedItem) => {
-        setProducts((prevProducts) =>
-          prevProducts.map((item) =>
-            item.CODIGO_ITEM === id ? { ...item, ...updatedItem } : item
-          )
-        );
-      })
-      .catch((err) => console.error("Erro ao atualizar item:", err));
-  };
-
-
   return (
-    <div>
-      <div style={{ padding: "1rem 3rem", background: "#FAFAFA" }}>
-        <div
-          className="card text-center mb-3"
-          style={{ width: "100%", color: "#fff", background: "#A2907A" }}
-        >
-          <form onSubmit={handleSubmit}>
-            <div className="card-body">
-              <h3 className="card-title">Cadastro de Produto</h3>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  width: "100%",
-                  justifyContent: "center",
-                }}
-              >
+    <>
+      <div>
+        <div style={{ padding: "1rem 3rem", background: "#FAFAFA" }}>
+          <div
+            className="card text-center mb-3"
+            style={{ width: "100%", color: "#fff", background: "#A2907A" }}
+          >
+            <form onSubmit={handleSubmit}>
+              <div className="card-body">
+                <h3 className="card-title">Cadastro de Produto</h3>
                 <div
                   style={{
-                    paddingBottom: ".5rem",
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "100%",
+                    justifyContent: "center",
                   }}
                 >
-                  <input
-                    className="input-placeholder"
-                    type="text"
-                    value={form.nome}
-                    onChange={(e) => setForm({ ...form, nome: e.target.value })}
-                    placeholder="Nome"
+                  <div
                     style={{
-                      background: "transparent",
-                      width: "50%",
-                      border: "2px solid #FFF",
-                      outline: "none",
-                      padding: ".5rem",
-                      color: "#FFF",
+                      paddingBottom: ".5rem",
                     }}
-                    required
-                  />
-                </div>
-                <div
-                  style={{
-                    paddingBottom: ".5rem",
-                  }}
-                >
-                  <input
-                    className="input-placeholder"
-                    type="number"
-                    step="0.01"
-                    value={form.valor}
-                    onChange={(e) =>
-                      setForm({ ...form, valor: e.target.value })
-                    }
-                    placeholder="Valor"
-                    style={{
-                      background: "transparent",
-                      width: "50%",
-                      border: "2px solid #FFF",
-                      outline: "none",
-                      padding: ".5rem",
-                      color: "#FFF",
-                    }}
-                    required
-                  />
-                </div>
-                <div
-                  style={{
-                    paddingBottom: ".5rem",
-                  }}
-                >
-                  <input
-                    className="input-placeholder"
-                    type="number"
-                    value={form.quantidade}
-                    onChange={(e) =>
-                      setForm({ ...form, quantidade: e.target.value })
-                    }
-                    placeholder="Quantidade"
-                    style={{
-                      background: "transparent",
-                      width: "50%",
-                      border: "2px solid #FFF",
-                      outline: "none",
-                      padding: ".5rem",
-                      color: "#FFF",
-                    }}
-                    required
-                  />
-                </div>
-                <div>
-                  <button
-                    style={{
-                      border: isButtonHover
-                        ? "3px solid #D6C8B6"
-                        : "3px solid #BFA78A",
-                      color: isButtonHover ? "#FFF" : "#FFF",
-                      fontWeight: "500",
-                      fontSize: ".9rem",
-                      padding: ".6rem .9rem",
-                      outline: "none",
-                      background: isButtonHover ? "#D6C8B6" : "transparent",
-                      transition: "all 0.3s ease",
-                    }}
-                    type="submit"
-                    onMouseEnter={() => setIsButtonHover(true)}
-                    onMouseLeave={() => setIsButtonHover(false)}
                   >
-                    Cadastrar Produto
-                  </button>
+                    <input
+                      className="input-placeholder"
+                      type="text"
+                      value={form.nome}
+                      onChange={(e) =>
+                        setForm({ ...form, nome: e.target.value })
+                      }
+                      placeholder="Nome"
+                      style={{
+                        background: "transparent",
+                        width: "50%",
+                        border: "2px solid #FFF",
+                        outline: "none",
+                        padding: ".5rem",
+                        color: "#FFF",
+                      }}
+                      required
+                    />
+                  </div>
+                  <div
+                    style={{
+                      paddingBottom: ".5rem",
+                    }}
+                  >
+                    <input
+                      className="input-placeholder"
+                      type="number"
+                      step="0.01"
+                      value={form.valor}
+                      onChange={(e) =>
+                        setForm({ ...form, valor: e.target.value })
+                      }
+                      placeholder="Valor"
+                      style={{
+                        background: "transparent",
+                        width: "50%",
+                        border: "2px solid #FFF",
+                        outline: "none",
+                        padding: ".5rem",
+                        color: "#FFF",
+                      }}
+                      required
+                    />
+                  </div>
+                  <div
+                    style={{
+                      paddingBottom: ".5rem",
+                    }}
+                  >
+                    <input
+                      className="input-placeholder"
+                      type="number"
+                      value={form.quantidade}
+                      onChange={(e) =>
+                        setForm({ ...form, quantidade: e.target.value })
+                      }
+                      placeholder="Quantidade"
+                      style={{
+                        background: "transparent",
+                        width: "50%",
+                        border: "2px solid #FFF",
+                        outline: "none",
+                        padding: ".5rem",
+                        color: "#FFF",
+                      }}
+                      required
+                    />
+                  </div>
+                  <div>
+                    <button
+                      style={{
+                        border: isButtonHover
+                          ? "3px solid #D6C8B6"
+                          : "3px solid #BFA78A",
+                        color: isButtonHover ? "#FFF" : "#FFF",
+                        fontWeight: "500",
+                        fontSize: ".9rem",
+                        padding: ".6rem .9rem",
+                        outline: "none",
+                        background: isButtonHover ? "#D6C8B6" : "transparent",
+                        transition: "all 0.3s ease",
+                      }}
+                      type="submit"
+                      onMouseEnter={() => setIsButtonHover(true)}
+                      onMouseLeave={() => setIsButtonHover(false)}
+                    >
+                      Cadastrar Produto
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </form>
-        </div>
+            </form>
+          </div>
 
-        {/* Tabela para exibir os itens */}
-        <div style={{ padding: "3rem 0", display: "flex", flexDirection: "column" }}>
-          <h2 style={{ alignSelf: "center", paddingBottom: "1rem" }}>Lista de Itens</h2>
-          <table
-            className="table table-hover"
-            style={{ padding: "100px" }}
-            border="1"
+          {/* Tabela para exibir os itens */}
+          <div
+            style={{
+              padding: "3rem 0",
+              display: "flex",
+              flexDirection: "column",
+            }}
           >
-            <thead>
-              <tr>
-                <th>Nome</th>
-                <th>Valor</th>
-                <th>Quantidade</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {products.map((item) => (
-                <tr key={item.CODIGO_ITEM}>
-                  <td>{item.NOME}</td>
-                  <td>
-                    {Number(item.VALOR).toLocaleString("pt-BR", {
-                      style: "currency",
-                      currency: "BRL",
-                    })}
-                  </td>
-                  <td>{item.QUANTIDADE}</td>
-                  <td>
-                    <button
-                      onClick={() => handleDelete(item.CODIGO_ITEM)}
-                      className="btn"
-                      style={{ border: "none" }}
-                    >
-                      <i
-                        style={{ color: "#D24633" }}
-                        className="bi bi-trash3-fill"
-                      ></i>
-                    </button>
-                    <button
-                      // onClick={() => handleUpdate(item.CODIGO_ITEM, )}
-                      className="btn"
-                      style={{ border: "none" }}
-                    >
-                      <i class="bi bi-pencil-square"></i>
-                    </button>
-                  </td>
+            <h2 style={{ alignSelf: "center", paddingBottom: "1rem" }}>
+              Lista de Itens
+            </h2>
+            <table
+              className="table table-hover"
+              style={{ padding: "100px" }}
+              border="1"
+            >
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Valor</th>
+                  <th>Quantidade</th>
+                  <th>Ações</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {products.map((item) => (
+                  <tr key={item.CODIGO_ITEM}>
+                    <td>{item.NOME}</td>
+                    <td>
+                      {Number(item.VALOR).toLocaleString("pt-BR", {
+                        style: "currency",
+                        currency: "BRL",
+                      })}
+                    </td>
+                    <td>{item.QUANTIDADE}</td>
+                    <td>
+                      <button
+                        onClick={() => handleDelete(item.CODIGO_ITEM)}
+                        className="btn"
+                        style={{ border: "none" }}
+                      >
+                        <i
+                          style={{ color: "#D24633" }}
+                          className="bi bi-trash3-fill"
+                        ></i>
+                      </button>
+                      <button
+                        onClick={() => openEditModal(item)}
+                        className="btn"
+                        style={{ border: "none" }}  
+                      >
+                        <i className="bi bi-pencil-square"></i>
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-    </div>
+      <EditProductModal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        product={selectedProduct}
+      />
+    </>
   );
 };
 
