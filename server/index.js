@@ -60,7 +60,16 @@ app.get("/estoque/:numberProductId", (req, res) => {
     if (err) {
       return res.status(500).json({ error: err.message });
     }
-    res.json(results);
+    if (results.length > 0) {
+      // Formata o caminho completo da foto antes de retornar
+      const item = results[0];
+      if (item.FOTO) {
+        item.FOTO = `http://localhost:3001${item.FOTO}`;
+      }
+      res.json(item);
+    } else {
+      res.status(404).json({ message: "Item não encontrado" });
+    }
   });
 });
 
@@ -82,7 +91,7 @@ app.post("/estoque", upload.single("foto"), (req, res) => {
       NOME: nome,
       VALOR: valor,
       QUANTIDADE: quantidade,
-      FOTO: foto,
+      FOTO: foto ? `http://localhost:3001${foto}` : null,
     };
 
     res.status(201).json(newItem);
