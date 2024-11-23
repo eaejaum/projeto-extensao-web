@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, } from "react";
 import { useNavigate } from "react-router-dom";
 import Carousel from "react-bootstrap/Carousel";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -16,13 +16,13 @@ const imagens = [discountOff, bf, rosa, rosao, rosinha];
 
 const Home = () => {
   const navigate = useNavigate();
-  const { filteredProducts, products, setProducts } = useContext(HandleSearchContext);
+  const { filteredProducts, setProducts } = useContext(HandleSearchContext);
 
   useEffect(() => {
     fetch("http://localhost:3001/estoque")
       .then((response) => response.json())
       .then((data) => setProducts(data));
-  }, []);
+  },);
 
   return (
     <div>
@@ -68,8 +68,19 @@ const Home = () => {
                     width: "216px",
                     height: "216px",
                     border: "1px solid black",
+                    display: "flex",
                   }}
-                ></div>
+                >
+                  {produto.FOTO ? (
+                    <img
+                      src={`http://localhost:3001${produto.FOTO}`}
+                      alt={`Foto do produto ${produto.NOME}`}
+                      style={{ maxWidth: "100%", objectFit: "cover"}}
+                    />
+                  ) : (
+                    <span>Sem imagem disponível</span>
+                  )}
+                </div>
                 <span style={{ fontSize: ".9rem", padding: ".3rem 0" }}>
                   {produto.NOME}
                 </span>

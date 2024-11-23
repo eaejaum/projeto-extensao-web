@@ -21,6 +21,7 @@ const ProductDetails = () => {
           setItem(null); // Para exibir um fallback em caso de erro
         });
     }
+    console.log(item);
   }, [productId]);
 
   const buyAtWhatsapp = () => {
