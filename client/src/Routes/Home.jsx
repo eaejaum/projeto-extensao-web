@@ -127,7 +127,7 @@ const Home = () => {
             ))
           ) : (
             <p>
-              Não existem produtos com este nome...
+              Não existem produtos com este nome... 
             </p>
           )}
         </div>
