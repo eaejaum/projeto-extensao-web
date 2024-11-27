@@ -19,7 +19,7 @@ const Home = () => {
   const { filteredProducts, setProducts } = useContext(HandleSearchContext);
 
   useEffect(() => {
-    fetch("http://localhost:3001/estoque")
+    fetch("https://serverby.vercel.app/estoque")
       .then((response) => response.json())
       .then((data) => setProducts(data));
   },);
