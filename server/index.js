@@ -4,13 +4,14 @@ const mysql = require("mysql2");
 const cors = require("cors");
 const multer = require("multer");
 const path = require("path");
+require('dotenv').config();
 
 // Configuração do banco de dados
 const db = mysql.createPool({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "lbypratas",
+  host: process.env.MYSQLHOST,
+  user: process.env.MYSQLUSER,
+  password: process.env.MYSQLPASSWORD,
+  database: process.env.MYSQLDATABASE,
 });
 
 // Configuração do multer para salvar imagens na pasta 'uploads/'
