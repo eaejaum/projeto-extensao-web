@@ -12,6 +12,7 @@ const db = mysql.createPool({
   user: process.env.MYSQLUSER,
   password: process.env.MYSQLPASSWORD,
   database: process.env.MYSQLDATABASE,
+  port: process.env.MYSQLPORT,
 });
 
 // Configuração do multer para salvar imagens na pasta 'uploads/'
