@@ -48,14 +48,17 @@ app.use("/uploads", express.static("uploads")); // Servir arquivos estáticos da
 // Endpoint para listar usuários
 app.get("/", (req, res) => {
   res.send("Servidor rodando");
-  console.log(`
-  ${process.env.MYSQLHOST},
-  ${process.env.MYSQLUSER},
-  ${process.env.MYSQLPASSWORD},
-  ${process.env.MYSQLDATABASE},
-  ${process.env.MYSQLPORT}
-    `);
 });
+
+app.get("/test", (req, res) => {
+  res.send(`
+    ${process.env.MYSQLHOST},
+    ${process.env.MYSQLUSER},
+    ${process.env.MYSQLPASSWORD},
+    ${process.env.MYSQLDATABASE},
+    ${process.env.MYSQLPORT}
+      `)
+})
 
 // Endpoint para listar itens do estoque
 app.get("/estoque", async (req, res) => {
