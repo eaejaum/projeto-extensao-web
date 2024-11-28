@@ -8,7 +8,7 @@ const ProductDetails = () => {
 
   useEffect(() => {
     if (productId) {
-      fetch(`http://localhost:3001/estoque/${productId}`)
+      fetch(`https://serverlby.vercel.app/estoque/${productId}`)
         .then((response) => {
           if (!response.ok) {
             throw new Error("Falha ao buscar o produto");

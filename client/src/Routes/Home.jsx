@@ -19,7 +19,7 @@ const Home = () => {
   const { filteredProducts, setProducts } = useContext(HandleSearchContext);
 
   useEffect(() => {
-    fetch("https://localhost:3001/estoque")
+    fetch("https://serverlby.vercel.app/estoque")
       .then((response) => response.json())
       .then((data) => setProducts(data));
   }, []);
@@ -73,7 +73,7 @@ const Home = () => {
                 >
                   {produto.FOTO ? (
                     <img
-                      src={`http://localhost:3001${produto.FOTO}`}
+                      src={`https://serverlby.vercel.app${produto.FOTO}`}
                       alt={`Foto do produto ${produto.NOME}`}
                       style={{ maxWidth: "100%", objectFit: "cover"}}
                     />

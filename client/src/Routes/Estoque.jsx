@@ -16,7 +16,7 @@ const Estoque = () => {
 
   // Função para buscar os itens
   useEffect(() => {
-    fetch("http://localhost:3001/estoque")
+    fetch("https://serverlby.vercel.app/estoque")
       .then((response) => response.json())
       .then((data) => setProducts(data))
       .catch((err) => console.error("Erro ao buscar itens:", err));
@@ -32,7 +32,7 @@ const Estoque = () => {
     formData.append("quantidade", parseInt(form.quantidade));
     if (form.foto) formData.append("foto", form.foto);
 
-    fetch("http://localhost:3001/estoque", {
+    fetch("https://serverlby.vercel.app/estoque", {
       method: "POST",
       body: formData,
     })
@@ -56,7 +56,7 @@ const Estoque = () => {
 
   // Função para deletar um item
   const handleDelete = (id) => {
-    fetch(`http://localhost:3001/estoque/${id}`, {
+    fetch(`https://serverlby.vercel.app/estoque/${id}`, {
       method: "DELETE",
     })
       .then((response) => {
@@ -228,7 +228,7 @@ const Estoque = () => {
                     <td>
                       {item.FOTO ? (
                         <img
-                          src={`http://localhost:3001${item.FOTO}`}
+                          src={`https://serverlby.vercel.app${item.FOTO}`}
                           alt={item.NOME}
                           style={{ width: "50px", height: "50px", objectFit: "cover" }}
                         />

@@ -20,7 +20,7 @@ const EditProductModal = ({ isOpen, setIsOpen, product }) => {
   }, [product]);
 
   const handleUpdate = (id, form) => {
-    fetch(`http://localhost:3001/estoque/editar/${id}`, {
+    fetch(`https://serverlby.vercel.app/estoque/editar/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
