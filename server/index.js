@@ -17,6 +17,15 @@ const db = mysql.createPool({
   port: process.env.MYSQLPORT,
 });
 
+db.query(`USE ${process.env.MYSQLDATABASE}`, (err) => {
+  if (err) {
+    console.error("Erro ao selecionar o banco de dados:", err);
+  } else {
+    console.log("Banco de dados selecionado com sucesso.");
+  }
+});
+
+
 // Configuração do multer para salvar imagens na pasta 'uploads/'
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
