@@ -4,8 +4,6 @@ const mysql = require("mysql2");
 const cors = require("cors");
 const multer = require("multer");
 const path = require("path");
-const fs = require('fs');
-const uploadDir = "uploads/";
 require("dotenv").config();
 
 const Port = process.env.PORT || 3001;
@@ -48,14 +46,6 @@ app.use("/uploads", express.static("uploads")); // Servir arquivos estáticos da
 app.get("/", (req, res) => {
   res.send("Servidor rodando");
 });
-
-// Verificar se o diretório existe; se não, cria.
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true }); // `{ recursive: true }` cria diretórios aninhados, se necessário
-  console.log("Diretório 'uploads/' criado.");
-} else {
-  console.log("Diretório 'uploads/' já existe.");
-}
 
 // Endpoint para listar itens do estoque
 app.get("/estoque", (req, res) => {
