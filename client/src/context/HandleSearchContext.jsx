@@ -11,7 +11,7 @@ export const HandleSearchContextProvider = ({ children }) => {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch("http://localhost:3001/estoque");
+      const response = await fetch("https://serverlby.vercel.app/estoque");
       const data = await response.json();
       setProducts(data);
     } catch (error) {
