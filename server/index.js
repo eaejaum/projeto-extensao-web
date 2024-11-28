@@ -15,9 +15,6 @@ const db = mysql.createPool({
   password: process.env.MYSQLPASSWORD,
   database: process.env.MYSQLDATABASE,
   port: process.env.MYSQLPORT,
-  connectionLimit: 10, // Limitar número de conexões simultâneas
-  acquireTimeout: 10000, // Aumentar o tempo limite para obter uma conexão
-  connectTimeout: 10000,
 });
 
 db.query(`USE ${process.env.MYSQLDATABASE}`, (err) => {
