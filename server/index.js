@@ -4,7 +4,7 @@ const mysql = require("mysql2");
 const cors = require("cors");
 const multer = require("multer");
 const path = require("path");
-require('dotenv').config();
+require("dotenv").config();
 
 const port = process.env.PORT || 3001;
 
@@ -15,6 +15,9 @@ const db = mysql.createPool({
   password: process.env.MYSQLPASSWORD,
   database: process.env.MYSQLDATABASE,
   port: process.env.MYSQLPORT,
+  connectionLimit: 10, // Limitar número de conexões simultâneas
+  acquireTimeout: 10000, // Aumentar o tempo limite para obter uma conexão
+  connectTimeout: 10000,
 });
 
 db.query(`USE ${process.env.MYSQLDATABASE}`, (err) => {
@@ -24,7 +27,6 @@ db.query(`USE ${process.env.MYSQLDATABASE}`, (err) => {
     console.log("Banco de dados selecionado com sucesso.");
   }
 });
-
 
 // Configuração do multer para salvar imagens na pasta 'uploads/'
 const storage = multer.diskStorage({
@@ -45,18 +47,17 @@ app.use("/uploads", express.static("uploads")); // Servir arquivos estáticos da
 
 // Endpoint para listar usuários
 app.get("/", (req, res) => {
-  res.send("Servidor rodando")
+  res.send("Servidor rodando");
 });
 
 // Endpoint para listar itens do estoque
-app.get("/estoque", (req, res) => {
-  const query = "SELECT * FROM ITEM";
-  db.query(query, (err, results) => {
-    if (err) {
-      return res.status(500).json({ error: err.message });
-    }
+app.get("/estoque", async (req, res) => {
+  try {
+    const [results] = await db.promise().query("SELECT * FROM ITEM");
     res.json(results);
-  });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
 });
 
 // Endpoint para buscar um item específico do estoque
