@@ -35,7 +35,7 @@ const EditProductModal = ({ isOpen, setIsOpen, product }) => {
       })
       .then(() => {
         // Fazer uma requisição GET para recarregar todos os produtos
-        fetch("http://localhost:3001/estoque")
+        fetch("https://serverlby.vercel.app/estoque")
           .then((response) => response.json())
           .then((updatedProducts) => {
             setProducts(updatedProducts); // Atualizar o estado com os produtos mais recentes
