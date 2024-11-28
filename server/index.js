@@ -62,7 +62,7 @@ app.get("/estoque/:numberProductId", (req, res) => {
       // Formata o caminho completo da foto antes de retornar
       const item = results[0];
       if (item.FOTO) {
-        item.FOTO = `http://localhost:3001${item.FOTO}`;
+        item.FOTO = `https://serverlby.vercel.app${item.FOTO}`;
       }
       res.json(item);
     } else {
@@ -89,7 +89,7 @@ app.post("/estoque", upload.single("foto"), (req, res) => {
       NOME: nome,
       VALOR: valor,
       QUANTIDADE: quantidade,
-      FOTO: foto ? `http://localhost:3001${foto}` : null,
+      FOTO: foto ? `https://serverlby.vercel.app${foto}` : null,
     };
 
     res.status(201).json(newItem);
