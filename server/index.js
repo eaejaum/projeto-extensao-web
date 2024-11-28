@@ -48,15 +48,15 @@ app.get("/", (req, res) => {
 });
 
 // Endpoint para listar itens do estoque
-app.get("/estoque", async (req, res) => {
-  try {
-    const [results] = await db.promise().query("SELECT * FROM ITEM");
+app.get("/estoque", (req, res) => {
+  const query = "SELECT * FROM ITEM";
+  db.query(query, (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
     res.json(results);
-  } catch (err) {
-    return res.status(500).json({ error: err.message });
-  }
+  });
 });
-
 // Endpoint para buscar um item específico do estoque
 app.get("/estoque/:numberProductId", (req, res) => {
   const { numberProductId } = req.params;
