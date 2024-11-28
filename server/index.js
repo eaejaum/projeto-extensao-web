@@ -6,7 +6,7 @@ const multer = require("multer");
 const path = require("path");
 require("dotenv").config();
 
-const port = process.env.PORT || 3001;
+const Port = process.env.PORT || 3001;
 
 // Configuração do banco de dados
 const db = mysql.createPool({
@@ -165,6 +165,6 @@ app.delete("/estoque/:id", (req, res) => {
 });
 
 // Inicializando o servidor na porta 3001
-app.listen(port, () => {
-  console.log("Servidor rodando na porta " + port);
+app.listen(Port, () => {
+  console.log("Servidor rodando na porta " + Port);
 });
