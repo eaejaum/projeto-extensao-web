@@ -20,7 +20,7 @@ const Estoque = () => {
       .then((response) => response.json())
       .then((data) => setProducts(data))
       .catch((err) => console.error("Erro ao buscar itens:", err));
-  }, );
+  }, []);
 
   // Função para cadastrar um novo item
   const handleSubmit = (event) => {

@@ -6,6 +6,8 @@ const multer = require("multer");
 const path = require("path");
 require('dotenv').config();
 
+const port = process.env.PORT || 3001;
+
 // Configuração do banco de dados
 const db = mysql.createPool({
   host: process.env.MYSQLHOST,
@@ -34,13 +36,7 @@ app.use("/uploads", express.static("uploads")); // Servir arquivos estáticos da
 
 // Endpoint para listar usuários
 app.get("/", (req, res) => {
-  let SQL = "SELECT * FROM USUARIO";
-  db.query(SQL, (err, result) => {
-    if (err) {
-      return res.status(500).json({ error: err.message });
-    }
-    res.json(result);
-  });
+  res.send("Servidor rodando")
 });
 
 // Endpoint para listar itens do estoque
@@ -149,6 +145,6 @@ app.delete("/estoque/:id", (req, res) => {
 });
 
 // Inicializando o servidor na porta 3001
-app.listen(3001, () => {
-  console.log("Servidor rodando na porta 3001");
+app.listen(port, () => {
+  console.log("Servidor rodando na porta " + port);
 });
