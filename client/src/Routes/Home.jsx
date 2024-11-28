@@ -67,7 +67,6 @@ const Home = () => {
                   style={{
                     width: "216px",
                     height: "216px",
-                    border: "1px solid black",
                     display: "flex",
                   }}
                 >
