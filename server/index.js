@@ -4,6 +4,8 @@ const mysql = require("mysql2");
 const cors = require("cors");
 const multer = require("multer");
 const path = require("path");
+const fs = require('fs');
+const uploadDir = "uploads/";
 require("dotenv").config();
 
 const Port = process.env.PORT || 3001;
@@ -47,6 +49,14 @@ app.get("/", (req, res) => {
   res.send("Servidor rodando");
 });
 
+// Verificar se o diretório existe; se não, cria.
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true }); // `{ recursive: true }` cria diretórios aninhados, se necessário
+  console.log("Diretório 'uploads/' criado.");
+} else {
+  console.log("Diretório 'uploads/' já existe.");
+}
+
 // Endpoint para listar itens do estoque
 app.get("/estoque", (req, res) => {
   const query = "SELECT * FROM ITEM";
@@ -81,7 +91,7 @@ app.get("/estoque/:numberProductId", (req, res) => {
 // Endpoint para cadastrar um novo item no estoque (com foto opcional)
 app.post("/estoque", upload.single("foto"), (req, res) => {
   const { nome, valor, quantidade } = req.body;
-  const foto = req.file ? `/uploads/${req.file.filename}` : null;
+  const foto = req.file ? `https://serverlby.vercel.app/uploads/${req.file.filename}` : null;
 
   const query =
     "INSERT INTO ITEM (NOME, VALOR, QUANTIDADE, FOTO) VALUES (?, ?, ?, ?)";
