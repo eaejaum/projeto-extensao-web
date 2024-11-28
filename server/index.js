@@ -14,7 +14,7 @@ const db = mysql.createPool({
   user: process.env.MYSQLUSER,
   password: process.env.MYSQLPASSWORD,
   database: process.env.MYSQLDATABASE,
-  port: "37409",
+  port: process.env.MYSQLPORT,
 });
 
 db.query(`USE ${process.env.MYSQLDATABASE}`, (err) => {
