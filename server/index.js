@@ -96,7 +96,7 @@ app.post("/estoque", upload.single("foto"), (req, res) => {
       NOME: nome,
       VALOR: valor,
       QUANTIDADE: quantidade,
-      FOTO: foto ? `https://serverlby.vercel.app${foto}` : null,
+      FOTO: foto ? `https://serverlby.vercel.app/${foto}` : null,
     };
 
     res.status(201).json(newItem);
