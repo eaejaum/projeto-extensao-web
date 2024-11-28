@@ -47,16 +47,6 @@ app.get("/", (req, res) => {
   res.send("Servidor rodando");
 });
 
-app.get("/test", (req, res) => {
-  res.send(`
-    ${process.env.MYSQLHOST},
-    ${process.env.MYSQLUSER},
-    ${process.env.MYSQLPASSWORD},
-    ${process.env.MYSQLDATABASE},
-    ${process.env.MYSQLPORT}
-      `)
-})
-
 // Endpoint para listar itens do estoque
 app.get("/estoque", async (req, res) => {
   try {
